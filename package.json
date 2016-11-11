@@ -1,0 +1,24 @@
+{
+  "name": "maps-api",
+  "version": "0.0.0",
+  "description": "Munich City Bot - Server Component",
+  "author": "TheBeeTeam",
+  "private": true,
+  "repository": "https://github.com/adrianhdezm/munich-city-bot",
+  "main": "./src/index.js",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adrianhdezm/munich-city-bot/issues"
+  },
+  "homepage": "https://github.com/adrianhdezm/munich-city-bot#readme",
+  "engines": {
+    "node": ">=6.9"
+  },
+  "scripts": {
+    "start": "node ./bin/server"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}
