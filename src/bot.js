@@ -18,7 +18,7 @@ bot.on('message', (message) => {
 
 	
 
-    let msg = `${user} send the message:: ${text}` ;
+    let msg = `${user} send the message:: ${encodedText}` ;
 
     bot.sendMessage(chatId,msg);
 
