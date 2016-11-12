@@ -109,7 +109,8 @@ module.exports = class LuisSDK extends EventEmitter {
 	    	}
 	    	
 	    	
-			return mvg.getStationForName("Hauptbahnhof").then(res => {
+			return mvg.getStationForName(stationStart.entity).then(res => {
+				//console.log(stationStart);
 				return mvg.getDepartures(res).then(res => {
 					//console.log("here");
 					let departure = res.departures[0];
