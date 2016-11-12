@@ -63,7 +63,6 @@ module.exports = class TelegramSDK extends EventEmitter {
                 }
 
                 const data = this._safeParse(resp.body);
-				console.log('data:' + data);
                 return data;
             });
     }
