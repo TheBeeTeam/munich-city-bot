@@ -14,7 +14,7 @@ var token = process.env.TELEGRAM_BOT_TOKEN || '298030970:AAHzKDBQ2wo0rnA6xwuRuxn
 
 
 var bot = new TelegramBot(token, options);
-bot.setWebHook('api.telegram.org/bot298030970:AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w');
+bot.setWebHook('https://munichcitybot.azurewebsites.net/bot');
 
 
 bot.getMe().then(function (me) {
