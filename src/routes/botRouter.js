@@ -21,8 +21,8 @@ router.post('/', (req, res) => {
     let botKey = 'AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w';
     let charId = '-178955930';
 
-    let date = Date.now();
-    let msg    = 'TestingNode' + date.toString();
+
+    let msg    =  JSON.stringify(req, null, 2);
 
     // HTTP POST request to Telegram API
     request(`http://api.telegram.org/bot${botId}:${botKey}/sendMessage?chat_id=${charId}&text=${msg}`, (error, response, data) => {
@@ -32,7 +32,6 @@ router.post('/', (req, res) => {
     });
 
 });
-
 
 
 
