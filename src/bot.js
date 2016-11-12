@@ -24,7 +24,7 @@ bot.on('message', (message) => {
     let user = message.from.username || message.from.first_name;
 	
 	luis.analyseMessage(text).then(data => {
-		bot.sendMessage(chatId, data);
+		bot.sendMessage(chatId, JSON.stringify(data));
 		//luis.answer(data).then(res => {
 		//	bot.sendMessage(chatId, luis.answer(res));
 		//});
