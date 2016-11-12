@@ -10,14 +10,15 @@ let luisKey = process.env.LUIS_SUBSCRIPTION_KEY || '';
 let bot = new  TelegramSDK(telegramToken);
 let luis = new LuisSDK(luisToken, luisKey);
 
+
 bot.on('message', (message) => {
 
     let chatId = message.chat.id;
     let text = message.text;
     let user = message.from.username || message.from.first_name;
 	
-	let luisResp = luis.analyseMessage('When does the next train leaves to Garching?').then(data => {
-    	return data;
+	luis.analyseMessage('When does the next train leaves to Garching?').then(data => {
+    	bot.sendMessage(chatId, data);
   	});
 	
 	bot.sendMessage(chatId, luisResp);	
