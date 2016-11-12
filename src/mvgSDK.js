@@ -45,7 +45,7 @@ module.exports = class MvgSDK extends EventEmitter {
         options.url = this._buildURL(_query, _path);
         console.log(options.url);
         options.simple = false;
-        options.headers = {'X-MVG-Authorization-Key' : '5af1beca494712ed38d313714d4caff6'};
+        options.headers = {'X-MVG-Authorization-Key' : this.token};
         options.resolveWithFullResponse = true;
 
 

@@ -12,16 +12,16 @@ let mvg = new MvgSDK(mvgToken);
 
 module.exports = class LuisSDK extends EventEmitter {
 
- msToTime(s) {
-  var ms = s % 1000;
-  s = (s - ms) / 1000;
-  var secs = s % 60;
-  s = (s - secs) / 60;
-  var mins = s % 60;
-  var hrs = (((s - mins) / 60)%24)+1;
+	msToTime(s) {
+  		var ms = s % 1000;
+  		s = (s - ms) / 1000;
+  		var secs = s % 60;
+  		s = (s - secs) / 60;
+  		var mins = s % 60;
+  		var hrs = (((s - mins) / 60)%24)+1;
 
-  return hrs + ':' + mins;
-}
+  		return hrs + ':' + mins;
+	}
 
     constructor(token, key) {
         super();
