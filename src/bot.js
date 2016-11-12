@@ -11,6 +11,11 @@ let luisKey = process.env.LUIS_SUBSCRIPTION_KEY || '';
 let bot = new  TelegramSDK(telegramToken);
 let luis = new LuisSDK(luisToken, luisKey);
 
+/*luis.analyseMessage("When does the next train leaves from Garching?").then(data => {
+    	//console.log(luis.answer(data));
+    	luis.answer(data).then(res => {console.log(res);});
+    	//bot.sendMessage(chatId, luis.answer(data));
+  	});*/
 
 bot.on('message', (message) => {
 
