@@ -1,7 +1,7 @@
 'use strict';
 
 const express   = require('express');
-const http      = require('http');
+var request     = require('request');
 
 
 var router = express.Router();
@@ -17,38 +17,24 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
-    return sendMessage('test message').then((data) => {
-        return res.json(data);
-    }).catch((err) => {
-        console.log(err);
+    let botId  = '298030970';
+    let botKey = 'AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w';
+    let charId = '-178955930';
+
+    let date = Date.now();
+    let msg    = 'TestingNode' + date.toString();
+
+    // HTTP POST request to Telegram API
+    request(`http://api.telegram.org/bot${botId}:${botKey}/sendMessage?chat_id=${charId}&text=${msg}`, (error, response, data) => {
+        if (!error && response.statusCode == 200) {
+            return res.json({method: 'POST', description: 'Chat Bot Integration', data: data});
+        }
     });
 
 });
 
 
 
-
-
-
-function sendMessage(msg) {
-    return new Promise(function(resolve, reject) {
-
-        let options = {
-            host: 'api.telegram.org',
-            port: 80,
-            path: '/bot298030970:AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w/sendMessage?chat_id=-178955930&text=' + msg
-        };
-
-        http.get(options, (resp) => {
-            resp
-                .on('data',(data) => {
-                        return resolve(data);
-                 })
-                .on("error", (error) => reject ({message: "Got error: " + error.message}));
-        });
-
-    })
-}
 
 
 module.exports = router;
