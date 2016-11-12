@@ -24,10 +24,10 @@ bot.on('message', (message) => {
     let user = message.from.username || message.from.first_name;
 	
 	luis.analyseMessage(text).then(data => {
-		bot.sendMessage(chatId, JSON.stringify(data));
-		//luis.answer(data).then(res => {
-		//	bot.sendMessage(chatId, luis.answer(res));
-		//});
+		//bot.sendMessage(chatId, JSON.stringify(data));
+		luis.answer(data).then(res => {
+			bot.sendMessage(chatId, res);
+		});
   	});
 	
     /*let msg = `${user} send the message: ${text}` ;
