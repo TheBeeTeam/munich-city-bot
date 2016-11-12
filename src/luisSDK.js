@@ -153,6 +153,7 @@ module.exports = class LuisSDK extends EventEmitter {
     			res += "walk to " + connection.to.name+". ";
     		}    		
     	}
+    	res = res.charAt(0).toUpperCase() + resr.slice(1); //first letter always capital
     	res += "You will arrive at " + this.msToTime(connection.arrival); 
     	return res;
     }
@@ -166,7 +167,6 @@ module.exports = class LuisSDK extends EventEmitter {
 	    	
 	    	var stationStart = this._getEntityOfType("Station::Start", entities);
 	    	if(stationStart == null){
-	    		console.log("ERROR HERE");
 	    		return Promise.resolve("Please specify from which station or address you want to travel!");
 	    	}
 	    	
@@ -216,7 +216,7 @@ module.exports = class LuisSDK extends EventEmitter {
 	    				let msg = "";
 	    				
 	    				if(res.connectionPartList.length > 1){
-	    					msg += 'First ';
+	    					msg += 'First, ';
 	    				}
 	    				
 	    				for(var i = 0; i < res.connectionPartList.length; i++){
