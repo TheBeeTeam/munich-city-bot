@@ -166,7 +166,7 @@ module.exports = class LuisSDK extends EventEmitter {
 	    	
 	    	var stationStart = this._getEntityOfType("Station::Start", entities);
 	    	if(stationStart == null){
-	    		return "Please specify from which station you want to travel!";
+	    		return "Please specify from which station or address you want to travel!";
 	    	}
 	    	
 	    	var vehicle = this._getEntityOfType("Vehicle", entities);
@@ -194,7 +194,7 @@ module.exports = class LuisSDK extends EventEmitter {
 					}					
 					
 					
-					return this._productToString(departure.product) + " " + departure.label + " departes at " + this.msToTime(departure.departureTime) + " at " + res1.name + " to " + departure.destination  + "." ;
+					return this._productToString(departure.product) + " " + departure.label + " departs at " + this.msToTime(departure.departureTime) + " at " + res1.name + " to " + departure.destination  + "." ;
 				});
 			});
 	    }
@@ -202,11 +202,11 @@ module.exports = class LuisSDK extends EventEmitter {
 	    	var respMsg = "";	
 	    	var stationStart = this._getEntityOfType("Station::Start", entities);
 	    	if(stationStart == null){
-	    		return "Please specify from which station you want to travel!";
+	    		return "Please specify from which station or address you want to travel!";
 	    	}	    	
 	    	var stationDest = this._getEntityOfType("Station::Dest", entities);
 	    	if(stationDest == null){
-	    		return new Promise(function(resolve, reject) {return "Please specify to which station you want to travel!";});
+	    		return new Promise(function(resolve, reject) {return "Please specify to which station or address you want to travel!";});
 	    		
 	    	}    	
 	    	
