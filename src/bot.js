@@ -16,8 +16,8 @@ bot.on('message', (message) => {
     let text = message.text;
     let user = message.from.username || message.from.first_name;
 	
-	let luisResp = luis.analyseMessage(text);
-	bot.sendMessage(chatId,luisResp);
+	let luisResp = luis.analyseMessage(text).then(resp => {bot.sendMessage(chatId,"SEND")});
+	
 	
     let msg = `${user} send the message: ${text}` ;
 	
