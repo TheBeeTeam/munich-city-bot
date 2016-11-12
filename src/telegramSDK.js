@@ -5,10 +5,15 @@ const request       = require('request-promise-native');
 const EventEmitter  = require('eventemitter3');
 
 
-module.exports = class TelegramBot extends EventEmitter {
+module.exports = class TelegramSDK extends EventEmitter {
 
     constructor(token) {
         super();
+
+        if (!token ) {
+            throw 'You must provide a token!';
+        }
+
         this.token = token;
     }
 
