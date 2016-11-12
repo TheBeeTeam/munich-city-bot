@@ -96,6 +96,47 @@ module.exports = class LuisSDK extends EventEmitter {
     	return this._request(encodeURI(message), {});
     }
     
+    _productToString(product){
+    	if(product == "u"){
+    		return "U";
+    	}
+    	else if(product == "b"){
+    		return "Bus";
+    	}
+    	else if(product == "t"){
+    		return "Tram";
+    	}
+    	else if(product == "s"){
+    		return "S-Bahn";
+    	}
+    	else{
+    		return product;
+    	}
+    }
+    
+    _stringToProduct(string){
+    	var pBus = ["bus", "Bus"];
+    	var pSubway = ["subway", "Subway", "ubahn", "u-bahn", "U-Bahn", "UBahn", "train", "Train"];
+    	var pTram = ["tram", "Tram"];
+    	var pSBahn = ["sbahn", "Sbahn", "s-bahn", "S-Bahn", "S Bahn", "s bahn", "s - bahn", "S - Bahn"];
+    	
+    	if(pBus.indexOf(string) > -1){
+    		return "b";
+    	}
+    	else if(pSubway.indexOf(string) > -1){
+    		return "u";
+    	}  
+    	else if(pTram.indexOf(string) > -1){
+    		return "t";
+    	}    
+    	else if(pSBahn.indexOf(string) > -1){
+    		return "s";
+    	}    
+    	else{
+    		return null;
+    	}  	
+    }
+    
 	answer(data){
 		var intent = data.topScoringIntent.intent;	    	
 	    var entities = data.entities;	
@@ -108,14 +149,32 @@ module.exports = class LuisSDK extends EventEmitter {
 	    		return "Please specify from which station you want to travel!";
 	    	}
 	    	
+	    	var vehicle = this._getEntityOfType("Vehicle", entities);
 	    	
-			return mvg.getStationForName(stationStart.entity).then(res => {
-				//console.log(stationStart);
-				return mvg.getDepartures(res).then(res => {
-					//console.log("here");
-					let departure = res.departures[0];
-					//console.log(departure);
-					return departure.product+ " " + departure.label + " departes at " + this.msToTime(departure.departureTime) + " at " + stationStart.entity + " to " + departure.destination  + "." ;
+			return mvg.getStationForName(stationStart.entity).then(res1 => {
+				return mvg.getDepartures(res1).then(res => {	
+					let departure = null;
+								
+					if(vehicle != null){
+						vehicle = this._stringToProduct(vehicle.entity);
+						var products = res1.products;
+						if(products.indexOf(vehicle) < 0){
+							return "Sorry, there is no " + this._productToString(vehicle) + " stop at this station.";
+						}
+						
+						for(var i = 0; i < res.departures.length; i++){
+							if(res.departures[i].product == vehicle){
+								departure = res.departures[i];
+								break;
+							}
+						}
+					}
+					else{
+						departure = res.departures[0];
+					}					
+					
+					
+					return this._productToString(departure.product) + " " + departure.label + " departes at " + this.msToTime(departure.departureTime) + " at " + res1.name + " to " + departure.destination  + "." ;
 				});
 			});
 	    }
