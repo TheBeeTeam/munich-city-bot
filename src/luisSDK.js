@@ -153,7 +153,7 @@ module.exports = class LuisSDK extends EventEmitter {
     			res += "walk to " + connection.to.name+". ";
     		}    		
     	}
-    	res = res.charAt(0).toUpperCase() + resr.slice(1); //first letter always capital
+    	res = res.charAt(0).toUpperCase() + res.slice(1); //first letter always capital
     	res += "You will arrive at " + this.msToTime(connection.arrival); 
     	return res;
     }
