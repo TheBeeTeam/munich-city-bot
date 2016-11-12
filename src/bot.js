@@ -10,14 +10,17 @@ let luisKey = process.env.LUIS_SUBSCRIPTION_KEY || '';
 
 let bot = new  TelegramSDK(telegramToken);
 let luis = new LuisSDK(luisToken, luisKey);
-/*
-luis.analyseMessage("when can i get home from garching?").then(data => {
-	//console.log(data);
-    	//console.log(luis.answer(data));
-    	luis.answer(data).then(res => {console.log(res);});
-    	//bot.sendMessage(chatId, luis.answer(data));
-  	});
-*/
+
+/*luis.analyseMessage("").then(data => {
+    	luis.answer(data).then(res => {
+    		console.log(res);
+    	}).catch(e => {
+  			//msg not for the bot
+  		});
+  	}).catch(e => {
+  		//luis failure
+  	});*/
+
 bot.on('message', (message) => {
 
     let chatId = message.chat.id;
@@ -28,7 +31,11 @@ bot.on('message', (message) => {
 		//bot.sendMessage(chatId, JSON.stringify(data));
 		luis.answer(data).then(res => {
 			bot.sendMessage(chatId, res);
-		});
+		}).catch(e => {
+  			//msg not for the bot
+  		});
+  	}).catch(e => {
+  		//luis failure
   	});
 	
     /*let msg = `${user} send the message: ${text}` ;
