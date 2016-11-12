@@ -69,13 +69,19 @@ module.exports = class MvgSDK extends EventEmitter {
     }
     
     getStationForName(name){
-    	return this._request('q='+name, '/location/queryWeb' ,{}).then(res => {
+    	return this._request('q='+ encodeURI(name), '/location/queryWeb' ,{}).then(res => {
     		for(var i = 0; i < res.locations.length; i++){
     			if(res.locations[i].type == "station")
     				return res.locations[i];
     		}
     		
     		return null;
+    	});
+    }
+    
+    getConnection(start, dest){
+    	return this._request('fromStation='+start.id+'&toStation='+dest.id, '/routing',{}).then(res => {
+    		return res.connectionList[0];
     	});
     }
     

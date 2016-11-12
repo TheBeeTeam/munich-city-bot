@@ -11,7 +11,8 @@ let luisKey = process.env.LUIS_SUBSCRIPTION_KEY || '';
 let bot = new  TelegramSDK(telegramToken);
 let luis = new LuisSDK(luisToken, luisKey);
 
-/*luis.analyseMessage("When does the next bus leaves from Garching?").then(data => {
+/*
+luis.analyseMessage("How can I get from Moosach to Quiddestraße?").then(data => {
 	//console.log(data);
     	//console.log(luis.answer(data));
     	luis.answer(data).then(res => {console.log(res);});

@@ -20,7 +20,7 @@ module.exports = class LuisSDK extends EventEmitter {
   		var mins = s % 60;
   		var hrs = (((s - mins) / 60)%24)+1;
 
-  		return hrs + ':' + mins;
+  		return hrs + ':' + ("0" + mins).slice(-2);
 	}
 
     constructor(token, key) {
@@ -137,11 +137,21 @@ module.exports = class LuisSDK extends EventEmitter {
     	}  	
     }
     
+    _connectionToString(connection){
+    	var res = "take the " + this._productToString(connection.product) + " " + connection.label;
+    	res += " from " + connection.from.name + " to " + connection.to.name + " ";
+    	res += "at " + this.msToTime(connection.departure) + ". ";
+    	res += "You will arrive at " + this.msToTime(connection.arrival);     	
+    	return res;
+    }
+    
 	answer(data){
 		var intent = data.topScoringIntent.intent;	    	
-	    var entities = data.entities;	
+	    var entities = data.entities;
 	    
+		console.log("intent");
 	    if(intent == "DepartureTime"){
+	    console.log("not");
 	    	var respMsg = "";	    
 	    	
 	    	var stationStart = this._getEntityOfType("Station::Start", entities);
@@ -177,6 +187,49 @@ module.exports = class LuisSDK extends EventEmitter {
 					return this._productToString(departure.product) + " " + departure.label + " departes at " + this.msToTime(departure.departureTime) + " at " + res1.name + " to " + departure.destination  + "." ;
 				});
 			});
+	    }
+	    else if(intent == "FindConnection"){
+	    	var respMsg = "";	
+	    	console.log(entities);
+	    	var stationStart = this._getEntityOfType("Station::Start", entities);
+	    	if(stationStart == null){
+	    		return "Please specify from which station you want to travel!";
+	    	}	    	
+	    	var stationDest = this._getEntityOfType("Station::Dest", entities);
+	    	if(stationDest == null){
+	    		return new Promise(function(resolve, reject) {return "Please specify to which station you want to travel!";});
+	    		
+	    	}    	
+	    	
+	    	return mvg.getStationForName(stationStart.entity).then(start => {
+	    		return mvg.getStationForName(stationDest.entity).then(dest => {
+	    			console.log(start);
+	    			console.log(dest);
+	    			
+	    			mvg.getConnection(start, dest).then(res => {
+	    				let msg = "";
+	    				
+	    				if(res.connectionPartList.length > 1){
+	    					msg += 'First ';
+	    				}
+	    				
+	    				for(var i = 0; i < res.connectionPartList.length; i++){
+	    					msg += this._connectionToString(res.connectionPartList[i])+ ". ";
+	    					
+	    					if(i+1 < res.connectionPartList.length){
+	    						msg += "Then, ";
+	    					} 
+	    				}
+	    				
+	    				console.log(msg);
+	    				
+	    				return msg;
+	    				
+	    			});	    			
+	    			
+	    		});	
+	    	});
+	    	
 	    }
 	}
 
