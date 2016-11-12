@@ -1,39 +1,34 @@
 'use strict';
 
-const express   = require('express');
-var request     = require('request');
+const express       = require('express');
+const TelegramBot   = require('./../telegramBot');
 
+
+let bot = new  TelegramBot('298030970:AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w');
+
+
+//Bot Routes
 
 var router = express.Router();
 
 
-//Bot Routes
 router.get('/', (req, res) => {
-
     return res.json({method: 'GET', description: 'Chat Bot Integration'});
-
 });
 
 
 router.post('/', (req, res) => {
 
-    let botId  = '298030970';
-    let botKey = 'AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w';
-    let charId = '-178955930';
 
+    let chatId = req.body.message.chat.id;
+    let text = req.body.message.text;
+    let user = req.body.message.from.username;
 
-    let msg    =  JSON.stringify(req.body, null, 2);
+    let msg = `${user} send the message: ${text}` ;
 
-    // HTTP POST request to Telegram API
-    request(`http://api.telegram.org/bot${botId}:${botKey}/sendMessage?chat_id=${charId}&text=${msg}`, (error, response, data) => {
-        if (!error && response.statusCode == 200) {
-            return res.json({method: 'POST', description: 'Chat Bot Integration', data: data});
-        }
-    });
+    bot.sendMessage(chatId,text);
 
 });
-
-
 
 
 module.exports = router;
