@@ -2,17 +2,18 @@
 
 const TelegramBot   = require('node-telegram-bot-api');
 
-let options = {
+var request = require('request');
+
+var options = {
     webHook: {
         port: 443
     }
 };
 
-let token = process.env.TELEGRAM_BOT_TOKEN || '298030970:AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w';
+var token = process.env.TELEGRAM_BOT_TOKEN || '298030970:AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w';
 
-let bot = new TelegramBot(token, options);
 
-// Setting the Webhook
+var bot = new TelegramBot(token, options);
 bot.setWebHook('api.telegram.org/bot298030970:AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w');
 
 
@@ -21,20 +22,36 @@ bot.getMe().then(function (me) {
 });
 
 
-// Matches "/echo [whatever]"
-bot.onText(/\/echo (.+)/, (msg, match) => {
-    // 'msg' is the received Message from Telegram
-    // 'match' is the result of executing the regexp above on the text content
-    // of the message
-
-    let chatId = msg.chat.id;
-    let resp = match[1]; // the captured "whatever"
-
-    // send back the matched "whatever" to the chat
-
-    let date = Date.now();
-    let reply    = resp + date.toString();
-
-    bot.sendMessage(chatId, reply);
+// Matches /audio
+bot.onText(/\/audio/, function (msg) {
+    var chatId = msg.chat.id;
+    var url = 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg';
+    // From HTTP request!
+    var audio = request(url);
+    bot.sendAudio(chatId, audio)
+        .then(function (resp) {
+            // Forward the msg
+            var messageId = resp.message_id;
+            bot.forwardMessage(chatId, chatId, messageId);
+        });
 });
 
+// Matches /love
+bot.onText(/\/love/, function (msg) {
+    var chatId = msg.chat.id;
+    var opts = {
+        reply_to_message_id: msg.message_id,
+        reply_markup: JSON.stringify({
+            keyboard: [
+                ['Yes, you are the bot of my life ❤'],
+                ['No, sorry there is another one...']]
+        })
+    };
+    bot.sendMessage(chatId, 'Do you love me?', opts);
+});
+
+bot.onText(/\/echo (.+)/, function (msg, match) {
+    var chatId = msg.chat.id;
+    var resp = match[1];
+    bot.sendMessage(chatId, resp);
+});
