@@ -15,11 +15,12 @@
     "node": ">=6.9"
   },
   "scripts": {
-    "start": "node ./bin/server"
+    "start": "node ./index"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "node-telegram-bot-api": "^0.24.0",
     "request": "^2.78.0"
   }
 }

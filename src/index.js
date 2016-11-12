@@ -15,6 +15,4 @@ api.get("/", (req, res) => res.json({method: 'GET', description: 'City Munich Bo
 //App routes
 api.use('/bot', botRouter);
 
-
-
 module.exports = api;
