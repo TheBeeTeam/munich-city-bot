@@ -3,13 +3,12 @@
 const TelegramSDK   = require('./telegramSDK');
 const LuisSDK = require('./luisSDK');
 
-let telegramToken = process.env.TELEGRAM_BOT_TOKEN || '0';
-let luisToken = process.env.LUIS_TOKEN || '0';
-let luisKey = process.env.LUIS_SUBSCRIPTION_KEY || '0';
+let telegramToken = process.env.TELEGRAM_BOT_TOKEN || '';
+let luisToken = process.env.LUIS_TOKEN || '';
+let luisKey = process.env.LUIS_SUBSCRIPTION_KEY || '';
 
 let bot = new  TelegramSDK(telegramToken);
 let luis = new LuisSDK(luisToken, luisKey);
-
 
 bot.on('message', (message) => {
 
@@ -17,7 +16,11 @@ bot.on('message', (message) => {
     let text = message.text;
     let user = message.from.username || message.from.first_name;
 	
-	bot.sendMessage(chatId,luis.analyseMessage('test'));	
+	let luisResp = luis.analyseMessage('When does the next train leaves to Garching?').then(data => {
+    	return data;
+  	});
+	
+	bot.sendMessage(chatId, luisResp);	
 	
     let msg = `${user} send the message: ${text}` ;
 	
