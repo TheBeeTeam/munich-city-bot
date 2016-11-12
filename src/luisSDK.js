@@ -71,17 +71,20 @@ module.exports = class TelegramSDK extends EventEmitter {
     	return this._request(encodeURI(message), {});
     }
     
-	/*
-    getMe() {
-        const _path = 'getMe';
-        return this._request(_path);
-    }
-
-    sendMessage(chatId, text, form = {}) {
-        form.chat_id = chatId;
-        form.text = text;
-        return this._request('sendMessage', { form });
-    }
-	*/
+	answer(data){
+		var intent = data.topScoringIntent.intent;	    	
+	    var entities = data.entities;	
+	    
+	    if(intent == "DepartureTime"){
+	    	var respMsg = "";	    
+	    	
+	    	var stationStart = getEntityOfType("Station::Start", entities);
+	    	if(stationStart == null){
+	    		return "Please specify from which station you want to travel!";
+	    	}
+	    			
+	    	return  "The SUBWAY UX departes at XX:XX at " + stationStart.entity + "." ;
+	    }
+	}
 
 };
