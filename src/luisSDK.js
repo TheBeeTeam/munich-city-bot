@@ -26,7 +26,9 @@ module.exports = class TelegramSDK extends EventEmitter {
         return URL.format({
             protocol: 'https',
             host: 'api.projectoxford.ai',
-            pathname: `/luis/v2.0/apps/${this.token}?subscription-key=${this.key}&q=${_msg}`
+            pathname: `/luis/v2.0/apps/${this.token}`,
+            search: `?subscription-key=${this.key}&q=${_msg}`
+            
         });
     }
 
@@ -49,6 +51,7 @@ module.exports = class TelegramSDK extends EventEmitter {
         }
 
         options.url = this._buildURL(_msg);
+        console.log(options.url);
         options.simple = false;
         options.resolveWithFullResponse = true;
 
