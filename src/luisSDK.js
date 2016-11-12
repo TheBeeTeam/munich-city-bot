@@ -30,15 +30,28 @@ module.exports = class TelegramSDK extends EventEmitter {
         });
     }
 
+	// used so that other funcs are not non-optimizable
+    _safeParse(json) {
+        try {
+            return JSON.parse(json);
+        } catch (err) {
+            throw new Error(`Error parsing Telegram response: ${String(json)}`);
+        }
+    }
 
     // request-promise
-    _request(_path, options = {}) {
+    _request(_msg, options = {}) {
         if (!this.token) {
             throw new Error('Luis token not provided!');
         }
         if (!this.key) {
             throw new Error('Luis key not provided!');
         }
+
+        options.url = this._buildURL(_path);
+        options.simple = false;
+        options.resolveWithFullResponse = true;
+
 
         return request(options)
             .then(resp => {
@@ -54,6 +67,10 @@ module.exports = class TelegramSDK extends EventEmitter {
 
                 throw new Error(`${data.error_code} ${data.description}`);
             });
+    }
+    
+    analyseMessage(message){
+    	return this._request(encodeURI(message), {});
     }
     
 	/*

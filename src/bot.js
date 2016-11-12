@@ -13,13 +13,14 @@ let luis = new LuisSDK(luisToken, luisKey);
 bot.on('message', (message) => {
 
     let chatId = message.chat.id;
-    let encodedText = encodeURI(message.text);
+    let text = message.text;
     let user = message.from.username || message.from.first_name;
-
 	
-
-    let msg = `${user} send the message:: ${encodedText}` ;
-
+	let luisResp = luis.analyseMessage(text);
+	bot.sendMessage(chatId,luisResp);
+	
+    let msg = `${user} send the message: ${text}` ;
+	
     bot.sendMessage(chatId,msg);
 
 });
