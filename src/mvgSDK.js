@@ -69,18 +69,42 @@ module.exports = class MvgSDK extends EventEmitter {
     }
     
     getStationForName(name){
+    	if(name.includes("forschungszentrum")){
+    		name = "Garching, Forschungszentrum";
+    	}
     	return this._request('q='+ encodeURI(name), '/location/queryWeb' ,{}).then(res => {
+    		//prio to stations
     		for(var i = 0; i < res.locations.length; i++){
     			if(res.locations[i].type == "station")
     				return res.locations[i];
     		}
-    		
+    		for(var i = 0; i < res.locations.length; i++){
+    			if(res.locations[i].type == "address")
+    				return res.locations[i];
+    		}
     		return null;
     	});
     }
     
     getConnection(start, dest){
-    	return this._request('fromStation='+start.id+'&toStation='+dest.id, '/routing',{}).then(res => {
+    	let from = "";
+    	let to = "";
+    	    	
+    	if(start.type == "address"){
+    		from = 'fromLatitude=' + start.latitude + '&fromLongitude=' + start.longitude;
+    	}
+    	else if(start.type == "station"){
+    		from = 'fromStation=' + start.id;
+    	}
+    	
+    	if(dest.type == "address"){
+    		to = 'toLatitude=' + dest.latitude + '&toLongitude=' + dest.longitude;
+    	}
+    	else if(dest.type == "station"){
+    		to = 'toStation=' + dest.id;
+    	}
+    	
+    	return this._request(from+'&'+to, 'routing',{}).then(res => {
     		return res.connectionList[0];
     	});
     }

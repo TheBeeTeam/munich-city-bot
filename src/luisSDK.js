@@ -138,10 +138,22 @@ module.exports = class LuisSDK extends EventEmitter {
     }
     
     _connectionToString(connection){
-    	var res = "take the " + this._productToString(connection.product) + " " + connection.label;
-    	res += " from " + connection.from.name + " to " + connection.to.name + " ";
-    	res += "at " + this.msToTime(connection.departure) + ". ";
-    	res += "You will arrive at " + this.msToTime(connection.arrival);     	
+    	var res = "";    	
+    	if(connection.connectionPartType != "FOOTWAY"){
+    		res += "take the " + this._productToString(connection.product) + " " + connection.label;
+    		res += " from " + connection.from.name + " to " + connection.to.name + " ";
+    		res += "at " + this.msToTime(connection.departure) + ". ";
+    		
+    	}    	
+    	else{
+    		if(connection.from.name != null){
+    			res += "walk from " + connection.from.name+". ";
+    		}
+    		else{
+    			res += "walk to " + connection.to.name+". ";
+    		}    		
+    	}
+    	res += "You will arrive at " + this.msToTime(connection.arrival); 
     	return res;
     }
     
