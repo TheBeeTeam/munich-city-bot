@@ -22,11 +22,11 @@ module.exports = class TelegramSDK extends EventEmitter {
     }
 
 
-    _buildURL(_path) {
+    _buildURL(_msg) {
         return URL.format({
             protocol: 'https',
             host: 'api.projectoxford.ai',
-            pathname: `/luis/v2.0/apps/${this.token}?subscription-key=${this.key}`
+            pathname: `/luis/v2.0/apps/${this.token}?subscription-key=${this.key}&q=${_msg}`
         });
     }
 
@@ -48,7 +48,7 @@ module.exports = class TelegramSDK extends EventEmitter {
             throw new Error('Luis key not provided!');
         }
 
-        options.url = this._buildURL(_path);
+        options.url = this._buildURL(_msg);
         options.simple = false;
         options.resolveWithFullResponse = true;
 
