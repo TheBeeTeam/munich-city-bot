@@ -19,27 +19,35 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
+    let reqText = JSON.stringify(req.body, null, 2);
 
     let template = {
         chat: {
             id: '-178955930'
         },
-        text: 'Example',
+        text: reqText,
         from: {
             username: 'robot'
         }
     };
 
+    bot.sendMessage(template.chat.id,template.text);
 
-    let message = (req.body.message)? req.body.message : template;
 
-    let chatId = message.chat.id;
-    let text = message.text;
-    let user = message.from.username;
+    if (req.body.hasOwnProperty('message')){
 
-    let msg = `${user} send the message: ${text}` ;
+        let message = req.body.message;
 
-    bot.sendMessage(chatId,msg);
+        let chatId = message.chat.id;
+        let text = message.text;
+        let user = message.from.username;
+
+        let msg = `${user} send the message: ${text}` ;
+
+        bot.sendMessage(chatId,msg);
+    }
+
+    return res.json({method: 'POST', description: 'Chat Bot Integration'});
 
 });
 
