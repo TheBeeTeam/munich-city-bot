@@ -1,12 +1,14 @@
 'use strict';
 
-const URL     = require('url');
-const request = require('request-promise-native');
+const URL           = require('url');
+const request       = require('request-promise-native');
+const EventEmitter  = require('eventemitter3');
 
 
-module.exports = class TelegramBot {
+module.exports = class TelegramBot extends EventEmitter {
 
     constructor(token) {
+        super();
         this.token = token;
     }
 
@@ -37,8 +39,6 @@ module.exports = class TelegramBot {
             obj.reply_markup = JSON.stringify(replyMarkup);
         }
     }
-
-
 
     // request-promise
     _request(_path, options = {}) {
