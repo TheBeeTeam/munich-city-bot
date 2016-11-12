@@ -149,9 +149,7 @@ module.exports = class LuisSDK extends EventEmitter {
 		var intent = data.topScoringIntent.intent;	    	
 	    var entities = data.entities;
 	    
-		console.log("intent");
 	    if(intent == "DepartureTime"){
-	    console.log("not");
 	    	var respMsg = "";	    
 	    	
 	    	var stationStart = this._getEntityOfType("Station::Start", entities);
@@ -190,7 +188,6 @@ module.exports = class LuisSDK extends EventEmitter {
 	    }
 	    else if(intent == "FindConnection"){
 	    	var respMsg = "";	
-	    	console.log(entities);
 	    	var stationStart = this._getEntityOfType("Station::Start", entities);
 	    	if(stationStart == null){
 	    		return "Please specify from which station you want to travel!";
@@ -202,11 +199,8 @@ module.exports = class LuisSDK extends EventEmitter {
 	    	}    	
 	    	
 	    	return mvg.getStationForName(stationStart.entity).then(start => {
-	    		return mvg.getStationForName(stationDest.entity).then(dest => {
-	    			console.log(start);
-	    			console.log(dest);
-	    			
-	    			mvg.getConnection(start, dest).then(res => {
+	    		return mvg.getStationForName(stationDest.entity).then(dest => {	    			
+	    			return mvg.getConnection(start, dest).then(res => {
 	    				let msg = "";
 	    				
 	    				if(res.connectionPartList.length > 1){
@@ -220,11 +214,8 @@ module.exports = class LuisSDK extends EventEmitter {
 	    						msg += "Then, ";
 	    					} 
 	    				}
-	    				
-	    				console.log(msg);
-	    				
-	    				return msg;
-	    				
+	    				    				
+	    				return msg;    				
 	    			});	    			
 	    			
 	    		});	
