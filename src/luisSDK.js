@@ -32,6 +32,15 @@ module.exports = class TelegramSDK extends EventEmitter {
         });
     }
 
+	_getEntityOfType(type, entities){
+		for(var i = 0; i < entities.length; i++){
+			if(entities[i].type == type){
+				return entities[i];
+			}
+		}	
+		return null;
+	}
+
 	// used so that other funcs are not non-optimizable
     _safeParse(json) {
         try {
@@ -78,12 +87,12 @@ module.exports = class TelegramSDK extends EventEmitter {
 	    if(intent == "DepartureTime"){
 	    	var respMsg = "";	    
 	    	
-	    	var stationStart = getEntityOfType("Station::Start", entities);
+	    	var stationStart = this._getEntityOfType("Station::Start", entities);
 	    	if(stationStart == null){
 	    		return "Please specify from which station you want to travel!";
 	    	}
 	    			
-	    	return  "The SUBWAY UX departes at XX:XX at " + stationStart.entity + "." ;
+	    	return  "The SUBWAY U X departes at XX:XX at " + stationStart.entity + "." ;
 	    }
 	}
 
