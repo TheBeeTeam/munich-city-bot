@@ -1,11 +1,27 @@
 'use strict';
 
+const MvgSDK = require('./mvgSDK');
+
 const URL           = require('url');
 const request       = require('request-promise-native');
 const EventEmitter  = require('eventemitter3');
 
+let mvgToken = process.env.MVG_Key || '';
 
-module.exports = class TelegramSDK extends EventEmitter {
+let mvg = new MvgSDK(mvgToken);
+
+module.exports = class LuisSDK extends EventEmitter {
+
+ msToTime(s) {
+  var ms = s % 1000;
+  s = (s - ms) / 1000;
+  var secs = s % 60;
+  s = (s - secs) / 60;
+  var mins = s % 60;
+  var hrs = (((s - mins) / 60)%24)+1;
+
+  return hrs + ':' + mins;
+}
 
     constructor(token, key) {
         super();
@@ -91,8 +107,16 @@ module.exports = class TelegramSDK extends EventEmitter {
 	    	if(stationStart == null){
 	    		return "Please specify from which station you want to travel!";
 	    	}
-	    			
-	    	return  "The SUBWAY U X departes at XX:XX at " + stationStart.entity + "." ;
+	    	
+	    	
+			return mvg.getStationForName('Garching').then(res => {
+				return mvg.getDepartures(res).then(res => {
+					//console.log("here");
+					let departure = res.departures[0];
+					//console.log(departure);
+					return departure.product+ " " + departure.label + " departes at " + this.msToTime(departure.departureTime) + " at " + stationStart.entity + " to " + departure.destination  + "." ;
+				});
+			});
 	    }
 	}
 
