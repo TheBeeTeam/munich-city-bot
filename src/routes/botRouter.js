@@ -20,13 +20,26 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
 
 
-    let chatId = req.body.message.chat.id;
-    let text = req.body.message.text;
-    let user = req.body.message.from.username;
+    let template = {
+        chat: {
+            id: '-178955930'
+        },
+        text: 'Example',
+        from: {
+            username: 'robot'
+        }
+    };
+
+
+    let message = (req.body.message)? req.body.message : template;
+
+    let chatId = message.chat.id;
+    let text = message.text;
+    let user = message.from.username;
 
     let msg = `${user} send the message: ${text}` ;
 
-    bot.sendMessage(chatId,text);
+    bot.sendMessage(chatId,msg);
 
 });
 
