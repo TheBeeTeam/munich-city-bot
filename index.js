@@ -2,15 +2,19 @@
 
 const TelegramBot   = require('node-telegram-bot-api');
 
-var options = {
+let options = {
     webHook: {
         port: 443
     }
 };
 
-var token = process.env.TELEGRAM_BOT_TOKEN || '298030970:AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w';
+let token = process.env.TELEGRAM_BOT_TOKEN || '298030970:AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w';
 
-var bot = new TelegramBot(token, options);
+let bot = new TelegramBot(token, options);
+
+// Setting the Webhook
+bot.setWebHook('api.telegram.org/bot298030970:AAHzKDBQ2wo0rnA6xwuRuxnCK0Bk8uKMO1w');
+
 
 bot.getMe().then(function (me) {
     console.log('Hi my name is %s!', me.username);
