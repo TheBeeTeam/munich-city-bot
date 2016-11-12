@@ -6,7 +6,7 @@ const URL           = require('url');
 const request       = require('request-promise-native');
 const EventEmitter  = require('eventemitter3');
 
-let mvgToken = process.env.MVG_Key || '';
+let mvgToken = process.env.MVG_KEY || '';
 
 let mvg = new MvgSDK(mvgToken);
 
