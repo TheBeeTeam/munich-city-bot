@@ -238,7 +238,7 @@ module.exports = class LuisSDK extends EventEmitter {
 	    			"Be careful, I know where you store your nudes.",
 	    			"Be polite!", "Very smart, insult the guy who has access to your phone",
 	    			"Come on, be nice!", "I love you too."];
-	    	let random = Math.floor((Math.random() * res.length) + 1);		
+	    	let random = Math.floor((Math.random() * res.length));		
 	    	return Promise.resolve(res[random]);
 	    }
 	    else{
