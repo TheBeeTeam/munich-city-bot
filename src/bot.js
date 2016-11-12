@@ -10,14 +10,14 @@ let luisKey = process.env.LUIS_SUBSCRIPTION_KEY || '';
 
 let bot = new  TelegramSDK(telegramToken);
 let luis = new LuisSDK(luisToken, luisKey);
-
-/*luis.analyseMessage("How can I get from Kurt-Eisner-Straße to Garching Forschungszentrum?").then(data => {
+/*
+luis.analyseMessage("when can i get home from garching?").then(data => {
 	//console.log(data);
     	//console.log(luis.answer(data));
     	luis.answer(data).then(res => {console.log(res);});
     	//bot.sendMessage(chatId, luis.answer(data));
-  	});*/
-
+  	});
+*/
 bot.on('message', (message) => {
 
     let chatId = message.chat.id;

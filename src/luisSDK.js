@@ -160,13 +160,14 @@ module.exports = class LuisSDK extends EventEmitter {
 	answer(data){
 		var intent = data.topScoringIntent.intent;	    	
 	    var entities = data.entities;
-	    
-	    if(intent == "DepartureTime"){
+
+	    if(intent == "DepartureTime"){	     
 	    	var respMsg = "";	    
 	    	
 	    	var stationStart = this._getEntityOfType("Station::Start", entities);
 	    	if(stationStart == null){
-	    		return "Please specify from which station or address you want to travel!";
+	    		console.log("ERROR HERE");
+	    		return Promise.resolve("Please specify from which station or address you want to travel!");
 	    	}
 	    	
 	    	var vehicle = this._getEntityOfType("Vehicle", entities);
@@ -179,7 +180,7 @@ module.exports = class LuisSDK extends EventEmitter {
 						vehicle = this._stringToProduct(vehicle.entity);
 						var products = res1.products;
 						if(products.indexOf(vehicle) < 0){
-							return "Sorry, there is no " + this._productToString(vehicle) + " stop at this station.";
+							return Promise.resolve("Sorry, there is no " + this._productToString(vehicle) + " stop at this station.");
 						}
 						
 						for(var i = 0; i < res.departures.length; i++){
@@ -193,7 +194,6 @@ module.exports = class LuisSDK extends EventEmitter {
 						departure = res.departures[0];
 					}					
 					
-					
 					return this._productToString(departure.product) + " " + departure.label + " departs at " + this.msToTime(departure.departureTime) + " at " + res1.name + " to " + departure.destination  + "." ;
 				});
 			});
@@ -202,11 +202,11 @@ module.exports = class LuisSDK extends EventEmitter {
 	    	var respMsg = "";	
 	    	var stationStart = this._getEntityOfType("Station::Start", entities);
 	    	if(stationStart == null){
-	    		return "Please specify from which station or address you want to travel!";
+	    		return Promise.resolve("Please specify from which station or address you want to travel!");
 	    	}	    	
 	    	var stationDest = this._getEntityOfType("Station::Dest", entities);
 	    	if(stationDest == null){
-	    		return new Promise(function(resolve, reject) {return "Please specify to which station or address you want to travel!";});
+	    		return Promise.resolve("Please specify to which station or address you want to travel!");
 	    		
 	    	}    	
 	    	
@@ -225,8 +225,7 @@ module.exports = class LuisSDK extends EventEmitter {
 	    					if(i+1 < res.connectionPartList.length){
 	    						msg += "Then, ";
 	    					} 
-	    				}
-	    				    				
+	    				} 				
 	    				return msg;    				
 	    			});	    			
 	    			
