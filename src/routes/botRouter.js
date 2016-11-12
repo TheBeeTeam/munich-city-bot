@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
     let charId = '-178955930';
 
 
-    let msg    =  JSON.stringify(req, null, 2);
+    let msg    =  JSON.stringify(req.body, null, 2);
 
     // HTTP POST request to Telegram API
     request(`http://api.telegram.org/bot${botId}:${botKey}/sendMessage?chat_id=${charId}&text=${msg}`, (error, response, data) => {
