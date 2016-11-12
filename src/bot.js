@@ -5,7 +5,7 @@ const LuisSDK = require('./luisSDK');
 
 let telegramToken = process.env.TELEGRAM_BOT_TOKEN || '';
 let luisToken = process.env.LUIS_TOKEN || '';
-let luisKey = process.env.LUIS_SUBSCRRIPTION_KEY || '';
+let luisKey = process.env.LUIS_SUBSCRIPTION_KEY || '';
 
 let bot = new  TelegramSDK(telegramToken);
 let luis = new LuisSDK(luisToken, luisKey);
