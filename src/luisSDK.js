@@ -98,16 +98,16 @@ module.exports = class LuisSDK extends EventEmitter {
     
     _productToString(product){
     	if(product == "u"){
-    		return "U";
+    		return "\u{1F688} U";
     	}
     	else if(product == "b"){
-    		return "Bus";
+    		return "\u{1F68D} Bus";
     	}
     	else if(product == "t"){
-    		return "Tram";
+    		return "\u{1F68D} 1F68A";
     	}
     	else if(product == "s"){
-    		return "S-Bahn";
+    		return "\u{1F686} S-Bahn";
     	}
     	else{
     		return product;
@@ -147,13 +147,12 @@ module.exports = class LuisSDK extends EventEmitter {
     	}    	
     	else{
     		if(connection.from.name != null){
-    			res += "walk from " + connection.from.name+". ";
+    			res += "\u{1F6B6} walk from " + connection.from.name+". ";
     		}
     		else{
-    			res += "walk to " + connection.to.name+". ";
+    			res += "\u{1F6B6} walk to " + connection.to.name+". ";
     		}    		
-    	}
-    	res = res.charAt(0).toUpperCase() + res.slice(1); //first letter always capital
+    	}    	
     	res += "You will arrive at " + this.msToTime(connection.arrival); 
     	return res;
     }
@@ -226,6 +225,7 @@ module.exports = class LuisSDK extends EventEmitter {
 	    						msg += "Then, ";
 	    					} 
 	    				} 				
+	    				msg = msg.charAt(0).toUpperCase() + res.slice(1); //first letter always capital
 	    				return msg;    				
 	    			});	    			
 	    			
