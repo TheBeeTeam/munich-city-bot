@@ -113,7 +113,7 @@ module.exports = class LuisSDK extends EventEmitter {
     		return product;
     	}
     }
-    , "\u{}"
+    
     _stringToProduct(string){
     	var pBus = ["bus", "Bus", "\u{1F68C}", "\u{1F68F}", "\u{1F68D}", "\u{1F68E}", "\u{1F690}"];
     	var pSubway = ["subway", "Subway", "ubahn", "u-bahn", "U-Bahn", "UBahn", "train", "Train"];
