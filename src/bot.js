@@ -28,7 +28,6 @@ bot.on('message', (message) => {
     let user = message.from.username || message.from.first_name;
 	
 	luis.analyseMessage(text).then(data => {
-		bot.sendMessage('-178955930', JSON.stringify(data));
 		luis.answer(data).then(res => {
 			bot.sendMessage(chatId, res);
 		}).catch(e => {
