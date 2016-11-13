@@ -116,9 +116,9 @@ module.exports = class LuisSDK extends EventEmitter {
     
     _stringToProduct(string){
     	var pBus = ["bus", "Bus", "\u{1F68C}", "\u{1F68F}", "\u{1F68D}", "\u{1F68E}", "\u{1F690}"];
-    	var pSubway = ["subway", "Subway", "ubahn", "u-bahn", "U-Bahn", "UBahn", "train", "Train"];
-    	var pTram = ["tram", "Tram"];
-    	var pSBahn = ["sbahn", "Sbahn", "s-bahn", "S-Bahn", "S Bahn", "s bahn", "s - bahn", "S - Bahn"];
+    	var pSubway = ["subway", "Subway", "ubahn", "u-bahn", "U-Bahn", "UBahn", "train", "Train", "\u{1F686}", "\u{1F688}", "\u{1F68A}", "\u{1F69D}", "\u{1F69E}"];
+    	var pTram = ["tram", "Tram", "\u{1F686}", "\u{1F688}", "\u{1F68A}", "\u{1F69D}", "\u{1F69E}"];
+    	var pSBahn = ["sbahn", "Sbahn", "s-bahn", "S-Bahn", "S Bahn", "s bahn", "s - bahn", "S - Bahn", "\u{1F686}", "\u{1F688}", "\u{1F68A}", "\u{1F69D}", "\u{1F69E}"];
     	
     	if(pBus.indexOf(string) > -1){
     		return "b";
