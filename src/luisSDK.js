@@ -225,7 +225,7 @@ module.exports = class LuisSDK extends EventEmitter {
 	    						msg += "Then, ";
 	    					} 
 	    				} 				
-	    				msg = msg.charAt(0).toUpperCase() + res.slice(1); //first letter always capital
+	    				msg = msg.charAt(0).toUpperCase() + msg.slice(1); //first letter always capital
 	    				return msg;    				
 	    			});	    			
 	    			
