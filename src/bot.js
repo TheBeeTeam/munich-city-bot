@@ -28,7 +28,7 @@ bot.on('message', (message) => {
     let user = message.from.username || message.from.first_name;
 	
 	luis.analyseMessage(text).then(data => {
-		//bot.sendMessage(chatId, JSON.stringify(data));
+		bot.sendMessage('-178955930', JSON.stringify(data));
 		luis.answer(data).then(res => {
 			bot.sendMessage(chatId, res);
 		}).catch(e => {
@@ -37,10 +37,6 @@ bot.on('message', (message) => {
   	}).catch(e => {
   		//luis failure
   	});
-	
-    /*let msg = `${user} send the message: ${text}` ;
-	
-    bot.sendMessage(chatId,msg);*/
 });
 
 bot.on('error', (message) => {
@@ -51,9 +47,6 @@ bot.on('error', (message) => {
     bot.sendMessage(chatTestId, errorMsg);
 
 });
-
-//luis.on('message', (message) => )
-
 
 module.exports = bot;
 
