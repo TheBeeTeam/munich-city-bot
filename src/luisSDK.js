@@ -109,6 +109,9 @@ module.exports = class LuisSDK extends EventEmitter {
     	else if(product == "s"){
     		return "\u{1F686} S-Bahn";
     	}
+    	else if(product == "r"){
+    		return "\u{1F680} rocket";
+    	}
     	else{
     		return product;
     	}
@@ -116,9 +119,10 @@ module.exports = class LuisSDK extends EventEmitter {
     
     _stringToProduct(string){
     	var pBus = ["bus", "Bus", "\u{1F68C}", "\u{1F68F}", "\u{1F68D}", "\u{1F68E}", "\u{1F690}"];
-    	var pSubway = ["subway", "Subway", "ubahn", "u-bahn", "U-Bahn", "UBahn", "train", "Train", "\u{1F682}", "\u{1F686}", "\u{1F688}", "\u{1F68A}", "\u{1F69D}", "\u{1F69E}"];
+    	var pSubway = ["subway", "Subway", "ubahn", "u-bahn", "u - bahn", "U-Bahn", "U-Bahn", "UBahn", "train", "Train", "\u{1F682}", "\u{1F686}", "\u{1F688}", "\u{1F68A}", "\u{1F69D}", "\u{1F69E}"];
     	var pTram = ["tram", "Tram", "\u{1F686}", "\u{1F688}", "\u{1F68A}", "\u{1F69D}", "\u{1F69E}", "\u{1F682}"];
     	var pSBahn = ["sbahn", "Sbahn", "s-bahn", "S-Bahn", "S Bahn", "s bahn", "s - bahn", "S - Bahn",  "\u{1F682}", "\u{1F686}", "\u{1F688}", "\u{1F68A}", "\u{1F69D}", "\u{1F69E}"];
+    	var pRocket = ["rocket", "Rocket", "\u{1F680}"];
     	
     	if(pBus.indexOf(string) > -1){
     		return "b";
@@ -132,6 +136,9 @@ module.exports = class LuisSDK extends EventEmitter {
     	else if(pSBahn.indexOf(string) > -1){
     		return "s";
     	}    
+    	else if(pRocket.indexOf(string) > -1){
+    		return "r";
+    	}
     	else{
     		return null;
     	}  	
@@ -178,7 +185,7 @@ module.exports = class LuisSDK extends EventEmitter {
 					if(vehicle != null){
 						vehicle = this._stringToProduct(vehicle.entity);
 						var products = res1.products;
-						if(products.indexOf(vehicle) < 0){
+						if(products.indexOf(vehicle) < 0){						
 							return Promise.resolve("Sorry, there is no " + this._productToString(vehicle) + " stop at this station.");
 						}
 						
