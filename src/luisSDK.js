@@ -22,6 +22,15 @@ module.exports = class LuisSDK extends EventEmitter {
 
   		return hrs + ':' + ("0" + mins).slice(-2);
 	}
+	
+	msToMin(s){
+		var ms = s % 1000;
+  		s = (s - ms) / 1000;
+  		var secs = s % 60;
+  		s = (s - secs) / 60;
+  		var mins = s / 60;
+  		return mins;
+	}
 
     constructor(token, key) {
         super();
@@ -233,6 +242,7 @@ module.exports = class LuisSDK extends EventEmitter {
 	    					} 
 	    				} 				
 	    				msg = msg.charAt(0).toUpperCase() + msg.slice(1); //first letter always capital
+	    				msg += " Your journey will take " + this.msToMin(res.departure - res.arrival) + " minutes.";
 	    				return msg;    				
 	    			});	    			
 	    			
