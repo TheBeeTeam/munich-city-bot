@@ -152,7 +152,8 @@ module.exports = class LuisSDK extends EventEmitter {
     	}  	
     }
     
-    _connectionToString(connection){
+    _connectionToString(connections, i){
+    	var connection = connections[i];
     	var res = "";    	
     	if(connection.connectionPartType != "FOOTWAY"){
     		res += "take the " + this._productToString(connection.product) + " " + connection.label;
@@ -165,7 +166,11 @@ module.exports = class LuisSDK extends EventEmitter {
     			res += "\u{1F6B6} walk from " + connection.from.name+". ";
     		}
     		else{
-    			res += "\u{1F6B6} walk to " + connection.to.name+". ";
+    			var station = "";
+    			if(connection.to.name != null && connections.length -1 >= (i+1)){
+    				station = " " + this._productToString(connection.product) + "stop ";	
+    			}
+    			res += "\u{1F6B6} walk to " + station + connection.to.name+". ";
     		}    		
     	}    	
     	res += "You will arrive at " + this.msToTime(connection.arrival); 
@@ -234,7 +239,7 @@ module.exports = class LuisSDK extends EventEmitter {
 	    				}
 	    				
 	    				for(var i = 0; i < res.connectionPartList.length; i++){
-	    					msg += this._connectionToString(res.connectionPartList[i])+ ". ";
+	    					msg += this._connectionToString(res.connectionPartList, i)+ ". ";
 	    					
 	    					if(i+1 < res.connectionPartList.length){
 	    						msg += "Then, ";
