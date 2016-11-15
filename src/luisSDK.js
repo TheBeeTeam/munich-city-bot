@@ -241,7 +241,7 @@ module.exports = class LuisSDK extends EventEmitter {
 	    					} 
 	    				} 				
 	    				msg = msg.charAt(0).toUpperCase() + msg.slice(1); //first letter always capital
-	    				msg += "Your journey will take " + this.msToMin(parseInt(res.arrival) - parseInt(res.departure)) + " minutes.";
+	    				msg += "Your journey will take \u{1F55C} " + this.msToMin(parseInt(res.arrival) - parseInt(res.departure)) + " minutes.";
 	    				return msg;    				
 	    			});	    			
 	    			
