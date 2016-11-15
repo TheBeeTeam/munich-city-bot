@@ -168,7 +168,11 @@ module.exports = class LuisSDK extends EventEmitter {
     		else{
     			var station = "";
     			if(connection.to.name != null && connections.length -1 >= (i+1)){
-    				station = this._productToString(connections[i+1].product) + "stop ";	
+    				var stop = " station ";
+    				if(connections[i+1].product == "b"){
+    					stop = " stop ";
+    				}
+    				station = this._productToString(connections[i+1].product) + stop;	
     			}
     			res += "\u{1F6B6} walk to " + station + connection.to.name + ". ";
     		}    		
