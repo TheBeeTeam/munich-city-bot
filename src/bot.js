@@ -27,15 +27,20 @@ bot.on('message', (message) => {
     let text = message.text;
     let user = message.from.username || message.from.first_name;
 	
-	luis.analyseMessage(text).then(data => {
-		luis.answer(data).then(res => {
-			bot.sendMessage(chatId, res);
-		}).catch(e => {
-  			//msg not for the bot
-  		});
-  	}).catch(e => {
+	if(text.includes("/start")){
+		bot.sendMessage(chatId, "Hi, I'm the Munich City Bot!");	
+	}
+	else{
+		luis.analyseMessage(text).then(data => {
+			luis.answer(data).then(res => {
+				bot.sendMessage(chatId, res);
+			}).catch(e => {
+  				//msg not for the bot
+  			});
+  		}).catch(e => {
   		//luis failure
-  	});
+  		});
+	}
 });
 
 bot.on('error', (message) => {
