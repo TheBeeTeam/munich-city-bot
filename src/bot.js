@@ -28,7 +28,7 @@ bot.on('message', (message) => {
     let user = message.from.username || message.from.first_name;
 	
 	if(text.includes("/start")){
-		bot.sendMessage(chatId, "Hi, I'm the Munich City Bot!");	
+		bot.sendMessage(chatId, "Hi, I'm the Munich City Bot! You can ask me questions about the public transport in Munich, like: How can I get from Hauptbahnhof to Odeonsplatz or when does the next \{1F68C} departs at Garching?");	
 	}
 	else{
 		luis.analyseMessage(text).then(data => {
